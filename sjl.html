@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>宋佳丽亲启</title>
+    <style>
+        /* 基础重置与全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 主体布局 */
+        body {
+            overflow: hidden;
+            display: flex;
+            /* min-height: 100vh; */
+            font-family: 'Microsoft YaHei', 楷体, sans-serif;
+            /* position: relative; */
+        }
+
+        /* 左侧文字容器 */
+        .text-panel {
+            width: 40%;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 滚动文字特效 */
+        .marquee-box {
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+            /* margin: 1.5rem 0; */
+			margin-top: -2%;
+        }
+        .marquee-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 20s linear infinite;
+            color: #ff69b4;
+            font-size: 1.2rem;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* 右侧背景图区域 */
+        .image-panel {
+            flex: 1;
+            background: url(https://example.com/your-image.jpg) no-repeat center/cover;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 爱心画布定位 */
+        #heart-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .text-panel {
+                width: 100%;
+                padding: 1rem;
+                min-height: 60vh;
+            }
+            .image-panel {
+                height: 40vh;
+                width: 100%;
+            }
+            .marquee-text {
+                font-size: 1rem;
+                animation-duration: 15s;
+				
+            }
+        }
+		/* 新增手写字体样式 */
+		        .mail-text {
+		            font-family: 'Segoe Script', '楷体', 'Brush Script MT', cursive;
+		            line-height: 2;
+		            font-size: 1.1rem;
+		            color: #5a3a2e;
+		            margin: 1rem 0;
+		            position: relative;
+		        }
+		
+		        .mail-text p {
+		            text-indent: 2em;
+		            margin-bottom: 0.5rem;
+		            letter-spacing: 0.05rem;
+		        }
+		
+		        .mail-text p:first-child {
+		            text-indent: 0;
+		            font-size: 1.3rem;
+		            font-weight: bold;
+		            margin-bottom: 1.5rem;
+		        }
+		
+		        .mail-text p:first-child::after {
+		            content: "";
+		            display: block;
+		            width: 110px;
+		            height: 1px;
+		            background: #ff69b4;
+		            /* margin: 0.8rem 0; */
+					margin-bottom: -4%; 
+		        }
+		
+		        @media (max-width: 768px) {
+		            .mail-text {
+		                font-size: 1rem;
+		                line-height: 1.8;
+		            }
+		            .mail-text p:first-child {
+		                font-size: 1.2rem;
+		            }
+		        }
+    </style>
+</head>
+<body>
+    <!-- 左侧文字内容 -->
+    <div class="text-panel">
+        <div class="marquee-box">
+            <div class="marquee-text">
+                你是我生命中的阳光 | 与你相遇是今生最美的奇迹 | 愿执子之手与子偕老 | 你的名字，是我所有快乐的开始 | 在我最好的时光里，遇见了你
+            | 你是我今生唯一的执着 | 每一个和你一起的瞬间，都值得珍藏 | 你是我遇见的最美丽的风景
+			</div>
+        </div>
+		<div class="mail-text">
+        <!-- <p>从第一次见到你的那一刻起，你的笑容就深深印在我的心里。每一天的相处都让我更加确信，你就是我想要共度余生的人。</p> -->
+        <p>亲爱的丽丽：</p>
+        <p>因为机遇让我们几几天前的我们第一次相遇</p>
+        <p>朝夕相处的时光里，你温柔的笑靥如砚中松烟，细细研磨开我所有的忐忑与彷徨。那些共享的晨昏暮晓，你让平凡的日子都泛着晨光，琐碎的日常也缀满星辰。</p>
+		<p>纸短情长，伏惟珍重。惟愿执子之手，共赏烟霞满目；与子偕老，同度岁月缱绻。</p>
+
+		</div>
+		<div style="text-align:center">
+        <button onclick="showSecretMessage()" style="
+            background: #ff69b4;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            margin-top: 1rem;
+            cursor: pointer;
+        ">
+            点击查看惊喜
+        </button>
+		</div>
+        <p id="secret" style="display:none;color:#e84393;margin-top:1rem;text-align:center">我会用余生证明，你的选择没有错！</p>
+    </div>
+
+    <!-- 右侧背景图 -->
+    <div class="image-panel"></div>
+
+    <!-- 爱心动画画布 -->
+    <canvas id="heart-canvas"></canvas>
+
+    <script>
+        // 爱心粒子系统
+        const canvas = document.getElementById('heart-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        
+        // 画布初始化
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // 生成爱心粒子
+            const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+            const particleCount = isMobile ? 30 : 80;
+            
+            for(let i=0; i<particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 4 + 2,
+                    speedX: (Math.random() - 0.5) * 2,
+                    speedY: (Math.random() - 0.5) * 2,
+                    color: `hsl(${Math.random()*360}, 70%, 60%)`
+                });
+            }
+            
+            animate();
+        }
+
+        // 动画循环
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                // 运动逻辑
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+                
+                // 边界检测
+                if(particle.x > canvas.width + 10) particle.x = -10;
+                if(particle.x < -10) particle.x = canvas.width + 10;
+                if(particle.y > canvas.height + 10) particle.y = -10;
+                if(particle.y < -10) particle.y = canvas.height + 10;
+                
+                // 绘制爱心
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI*2);
+                ctx.fillStyle = particle.color;
+                ctx.fill();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+
+        // 交互功能
+        function showSecretMessage() {
+            document.getElementById('secret').style.display = 'block';
+            document.querySelector('button').style.display = 'none';
+            
+            // 添加心动特效
+            particles.forEach(p => {
+                p.speedX *= 1.5;
+                p.speedY *= 1.5;
+            });
+        }
+
+        // 初始化
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+    </script>
+</body>
+</html>
